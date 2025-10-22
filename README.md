@@ -4,6 +4,11 @@ This repository holds the source code that powers [SeaDex](https://releases.moe/
 # Deployment
 To deploy SeaDex, you need [docker](https://docs.docker.com/). SeaDex images are available on [ghcr.io](https://github.com/ThaUnknown/releases-moe/pkgs/container/releases-moe).
 
+## Image Tags
+
+- `latest` - Stable release version
+- `dev` - Development version, follows the main branch
+
 ```yaml
 ---
 services:
