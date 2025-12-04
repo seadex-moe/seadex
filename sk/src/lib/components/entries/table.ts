@@ -55,7 +55,8 @@ export const columns = table.createColumns([
   }),
   table.column({
     accessor: ({seasonYear, startDate}) => seasonYear || startDate?.year,
-    header: 'Year'
+    header: 'Year',
+    id: 'seasonYear'
   }),
   table.column({
     accessor: 'episodes',
