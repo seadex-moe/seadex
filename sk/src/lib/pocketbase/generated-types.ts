@@ -136,6 +136,7 @@ export type TorrentsRecord<Tfiles = { length: number, name: string }[]> = {
 	infoHash: string
 	isBest?: boolean
 	releaseGroup: string
+	subGrouping: string
 	tags: TorrentTags[]
 	tracker: TorrentsTrackerOptions
 	url: string
