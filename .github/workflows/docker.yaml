@@ -28,7 +28,7 @@ jobs:
       - name: Log in to the Container registry
         # Don't login if the pull request is coming from a different repo (e.g. a fork)
         if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'ThaUnknown/releases-moe' }}
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -47,7 +47,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker images
-        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294 # v7.0.0
+        uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
         with:
           context: .
           # Don't push to registry if the pull request is coming from a different repo (e.g. a fork)
