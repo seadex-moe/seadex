@@ -1,0 +1,6 @@
+allowBuilds:
+  '@sveltejs/kit': false
+  esbuild: false
+  sharp: false
+  sqlite3: false
+  svelte-preprocess: false
