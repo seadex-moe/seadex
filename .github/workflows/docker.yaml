@@ -5,16 +5,23 @@ on:
     branches:
       - main
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - "v[0-9]+.[0-9]+.[0-9]+"
   pull_request:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-push:
+    name: Build Docker image and push to GHCR
     runs-on: ubuntu-latest
 
     permissions:
       contents: read
-      packages: write
+      packages: write # Necessary for publishing to GHCR
 
     steps:
       - name: Checkout code
@@ -27,8 +34,8 @@ jobs:
 
       - name: Log in to the Container registry
         # Don't login if the pull request is coming from a different repo (e.g. a fork)
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'ThaUnknown/releases-moe' }}
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        if: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -51,7 +58,7 @@ jobs:
         with:
           context: .
           # Don't push to registry if the pull request is coming from a different repo (e.g. a fork)
-          push: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'ThaUnknown/releases-moe' }}
+          push: ${{ github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) }}
           provenance: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
