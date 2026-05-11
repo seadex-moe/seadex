@@ -2,13 +2,13 @@
 This repository holds the source code that powers [SeaDex](https://releases.moe/).
 
 # Deployment
-To deploy SeaDex, you need [docker](https://docs.docker.com/). SeaDex images are available on [ghcr.io](https://github.com/ThaUnknown/releases-moe/pkgs/container/releases-moe).
+To deploy SeaDex, you need [docker](https://docs.docker.com/). SeaDex images are available on [ghcr.io](https://github.com/seadex-moe/seadex/pkgs/container/seadex).
 
 ```yaml
 ---
 services:
   seadex:
-    image: ghcr.io/thaunknown/releases-moe:latest
+    image: ghcr.io/seadex-moe/seadex:latest
     container_name: seadex
     environment:
       - PUID=1000
@@ -45,4 +45,4 @@ Once you're done making your changes, run `docker compose up -d` to have your lo
 
 ## License
 
-Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License. See [LICENSE](https://github.com/ThaUnknown/releases-moe/blob/main/LICENSE) for more information.
+Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License. See [LICENSE](https://github.com/seadex-moe/seadex/blob/main/LICENSE) for more information.
