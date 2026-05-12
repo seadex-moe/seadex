@@ -60,11 +60,11 @@ export const handle = async ({ event, resolve }) => {
 
     const best = item.expand?.trs.filter(({ isBest }) => isBest)
     if (best?.length) {
-      desc += `Best: ${[...new Set(best.map(({ releaseGroup }) => releaseGroup))].join('/')}\n`
+      desc += `**Best:** ${[...new Set(best.map(({ releaseGroup, dualAudio }) => dualAudio ? `**${releaseGroup}**` : releaseGroup))].join('/')}\n`
     }
     const alt = item.expand?.trs.filter(({ isBest }) => !isBest)
     if (alt?.length) {
-      desc += `Alt: ${[...new Set(alt.map(({ releaseGroup }) => releaseGroup))].join('/')}\n`
+      desc += `**Alt:** ${[...new Set(alt.map(({ releaseGroup, dualAudio }) => dualAudio ? `**${releaseGroup}**` : releaseGroup))].join('/')}\n`
     }
 
     if (item.notes) desc += `\n${item.notes}\n`
@@ -98,6 +98,9 @@ export const handle = async ({ event, resolve }) => {
         ).replace(
           '<meta name="theme-color" content="#ff4242">',
           `<meta name="theme-color" content="${data.Media.coverImage.color || '#3db4f2'}">`
+        ).replace(
+          '<meta property="og:type" content="object">',
+          '<meta property="og:type" content="rich">'
         )
       }
     })
