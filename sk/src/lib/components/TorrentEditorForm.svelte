@@ -90,7 +90,7 @@
     </div>
   </div>
 </div>
-<div class='grid grid-cols-1'>
+<div class='grid grid-cols-2 gap-2'>
   <div>
     <div class='mb-2'>
       <Label>Tags</Label>
@@ -104,6 +104,12 @@
           {/each}
         </Select.Content>
       </Select.Root>
+    </div>
+  </div>
+  <div>
+    <div class='mb-2'>
+      <Label>Sub Group</Label>
+      <Input type='text' class='form-control' id={'subGrouping' + i} bind:value={torrent.subGrouping} />
     </div>
   </div>
 </div>
