@@ -1,3 +1,4 @@
+minimumReleaseAge: 10080 # 7 days
 allowBuilds:
   '@sveltejs/kit': false
   esbuild: false
