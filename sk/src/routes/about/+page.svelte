@@ -308,7 +308,7 @@ const entriesList = await entriesResponse.json()`
 
   <!-- Editors -->
   <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4'>
-    <h3 class='font-bold text-2xl'>Who are the editors?</h3>
+    <h3 class='font-bold text-xl'>Who are the editors?</h3>
 
     {#await editors}
       <p class='text-gray-600 dark:text-gray-400'>Loading...</p>
@@ -332,7 +332,7 @@ const entriesList = await entriesResponse.json()`
   <!-- API -->
   <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4'>
 
-    <h3 class='font-bold text-2xl'>How to programmatically access the data?</h3>
+    <h3 class='font-bold text-xl'>How to programmatically access the data?</h3>
 
     <p>
       We provide a REST API under
@@ -390,7 +390,7 @@ const entriesList = await entriesResponse.json()`
       </a>
     </p>
 
-    <h3 class='font-bold text-2xl pt-6'>API usage examples using JavaScript:</h3>
+    <h3 class='font-bold text-xl pt-6'>API usage examples using JavaScript:</h3>
 
     <p>Using the official pocketbase library:</p>
 
