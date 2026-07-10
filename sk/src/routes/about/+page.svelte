@@ -32,15 +32,19 @@ const entriesList = await entriesResponse.json()`
 <div class='w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8'>
 
   <!-- What is SeaDex -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>What is SeaDex?</h3>
+  <section id='seadex' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#seadex' class='hover:underline focus:underline'>What is SeaDex?</a>
+    </h3>
     <p>SeaDex is an index of the highest quality releases for a given anime.</p>
     <p>We only provide release names and metadata. We do not host or distribute torrents.</p>
   </section>
 
   <!-- How are releases chosen -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>How are releases chosen?</h3>
+  <section id='releases' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#releases' class='hover:underline focus:underline'>How are releases chosen?</a>
+    </h3>
     <p>Releases are evaluated using a range of factors.</p>
     <p>
       For the best slot, the release must use the highest quality video source as determined by image comparisons,
@@ -53,8 +57,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- When are new releases added? -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>When are new releases added?</h3>
+  <section id='new-releases' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#new-releases' class='hover:underline focus:underline'>When are new releases added?</a>
+    </h3>
 
     <p>
       SeaDex only lists completed shows, for airing content or shows not present on SeaDex, you can refer to <a href='https://thewiki.moe/guides/quality/#releases' target='_blank' rel='noopener noreferrer'
@@ -71,8 +77,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- How often is the site updated? -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>How often is the site updated?</h3>
+  <section id='updates' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#updates' class='hover:underline focus:underline'>How often is the site updated?</a>
+    </h3>
 
     <p>
       As SeaDex is a community-run project there is no set schedule for updates. Factors such as new releases dropping, community members providing feedback or creating comparisons, how busy the editors are, all play a role. We try our best to make sure the information we provide stays relevant.
@@ -83,8 +91,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Player -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>Which player should I use?</h3>
+  <section id='player' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#player' class='hover:underline focus:underline'>Which player should I use?</a>
+    </h3>
 
     <p>
       We recommend using
@@ -113,8 +123,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Private tracker -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>How do I unlock the private tracker button?</h3>
+  <section id='private-tracker' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#private-tracker' class='hover:underline focus:underline'>How do I unlock the private tracker button?</a>
+    </h3>
     <p>
       Members of a popular anime private tracker should check the site enhancements section of the forums.
     </p>
@@ -125,8 +137,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Contribute -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>How can I contribute?</h3>
+  <section id='contribute' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#contribute' class='hover:underline focus:underline'>How can I contribute?</a>
+    </h3>
 
     <p>As a community project we appreciate any help we can get. Here are some ways you can contribute.</p>
 
@@ -160,8 +174,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Tools -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>Are there any tools/scripts?</h3>
+  <section id='tools' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#tools' class='hover:underline focus:underline'>Are there any tools/scripts?</a>
+    </h3>
 
     <ul class='space-y-3'>
       <li>
@@ -218,8 +234,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Tags -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4'>
-    <h3 class='text-xl font-bold'>What are the tags?</h3>
+  <section id='tags' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-4 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#tags' class='hover:underline focus:underline'>What are the tags?</a>
+    </h3>
 
     <p>Tags are used to indicate issues with compatibility or the release itself.</p>
 
@@ -297,8 +315,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Sheet -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-3'>
-    <h3 class='text-xl font-bold'>What about the sheet?</h3>
+  <section id='sheet' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-3 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#sheet' class='hover:underline focus:underline'>What about the sheet?</a>
+    </h3>
     <p>The sheet has been largely phased out in favor of this site. Updates are still backported there but you'll miss out on all the new features such as tags.</p>
     <p>If you find any discrepancies in entries between the two, please report them
       <a href='https://discord.gg/jPeeZewWRn' class='text-blue-600 dark:text-blue-400 hover:underline'>on our Discord</a>.
@@ -307,8 +327,10 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- Editors -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4'>
-    <h3 class='font-bold text-2xl'>Who are the editors?</h3>
+  <section id='editors' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-4 scroll-mt-20'>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#editors' class='hover:underline focus:underline'>Who are the editors?</a>
+    </h3>
 
     {#await editors}
       <p class='text-gray-600 dark:text-gray-400'>Loading...</p>
@@ -330,9 +352,11 @@ const entriesList = await entriesResponse.json()`
   </section>
 
   <!-- API -->
-  <section class='rounded-xl border border-gray-200 dark:border-gray-800 p-6 space-y-4'>
+  <section id='api' class='rounded-xl border border-gray-200 dark:border-gray-800 px-8 py-6 space-y-4 scroll-mt-20'>
 
-    <h3 class='font-bold text-2xl'>How to programmatically access the data?</h3>
+    <h3 class='group text-xl font-bold'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#api' class='hover:underline focus:underline'>How to programmatically access the data?</a>
+    </h3>
 
     <p>
       We provide a REST API under
@@ -390,7 +414,9 @@ const entriesList = await entriesResponse.json()`
       </a>
     </p>
 
-    <h3 class='font-bold text-2xl pt-6'>API usage examples using JavaScript:</h3>
+    <h3 id='api-examples' class='group text-xl font-bold pt-6 scroll-mt-20'>
+      <span class='inline-block w-[1.35em] -ml-[1.35em] pr-[0.20em] text-right leading-none text-gray-600 dark:text-gray-400 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100' aria-hidden='true'>#</span><a href='#api-examples' class='hover:underline focus:underline'>API usage examples using JavaScript:</a>
+    </h3>
 
     <p>Using the official pocketbase library:</p>
 
