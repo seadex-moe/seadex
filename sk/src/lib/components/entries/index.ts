@@ -1,4 +1,3 @@
-export { default as TitleCell } from './cells/title-cell.svelte'
 export { default as FormatCell } from './cells/format-cell.svelte'
 export { default as BoolCell } from './cells/bool-cell.svelte'
 export { default as RowActions } from './row-actions.svelte'
