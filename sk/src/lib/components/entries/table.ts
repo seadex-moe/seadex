@@ -7,13 +7,19 @@ import {
   addPagination,
   addSortBy
 } from 'svelte-headless-table/plugins'
-import { RowActions, FormatCell, BoolCell } from '.'
+import { RowActions, FormatCell, BoolCell, TitleCoverCell, BestCell } from '.'
 
-const initialHiddenColumnIds = ['incomplete', 'theoreticalBest', 'updated']
+const initialHiddenColumnIds = []
 
 const nextToHideBasedOnWidth = ['episodes', 'seasonYear', 'format']
 
 const widthTresholds = [1000, 920, 800]
+
+const dateStringOptions = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
 
 for (const [index, treshold] of widthTresholds.entries()) {
   if (window.outerWidth < treshold) { // this could be innerWidth, but that excludes devtools, we want capabilities, not viewport
@@ -45,7 +51,9 @@ export const columns = table.createColumns([
   table.column({
     accessor: ({ title }) => title.english || title.userPreferred,
     header: 'Title',
-    id: 'title'
+    id: 'title',
+    cell: ({row}) => createRender(TitleCoverCell, {"entry": row.original})
+    ,
   }),
   table.column({
     accessor: 'format',
@@ -63,24 +71,26 @@ export const columns = table.createColumns([
     header: 'Episodes'
   }),
   table.column({
-    accessor: entry => sortTorrents(entry.expand?.trs).find(({ isBest }) => isBest)?.releaseGroup ?? '',
-    header: 'Best'
+    accessor: entry => sortTorrents(entry.expand?.trs).find(({ isBest }) => isBest)?.releaseGroup ?? entry.theoreticalBest,
+    header: 'Best',
+    cell: ({row, value}) => createRender(BestCell, {"entry": row.original, value, best: true})
   }),
   table.column({
     accessor: entry => sortTorrents(entry.expand?.trs).find(({ isBest }) => !isBest)?.releaseGroup ?? '',
-    header: 'Alt'
+    header: 'Alt',
+    cell: ({row, value}) => createRender(BestCell, {"entry": row.original, value, best: false})
   }),
+  // table.column({
+  //   accessor: 'theoreticalBest',
+  //   header: 'Unmuxed'
+  // }),
+  // table.column({
+  //   accessor: 'incomplete',
+  //   header: 'Complete',
+  //   cell: ({ value }) => createRender(BoolCell, { value })
+  // }),
   table.column({
-    accessor: 'theoreticalBest',
-    header: 'Unmuxed'
-  }),
-  table.column({
-    accessor: 'incomplete',
-    header: 'Complete',
-    cell: ({ value }) => createRender(BoolCell, { value })
-  }),
-  table.column({
-    accessor: entry => new Date(entry.updated).toLocaleDateString(),
+    accessor: entry => new Date(entry.updated).toLocaleDateString(undefined, dateStringOptions),
     header: 'Updated',
     id: 'updated'
   }),

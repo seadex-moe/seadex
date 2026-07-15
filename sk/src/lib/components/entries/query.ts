@@ -6,6 +6,7 @@ import { idList, type alResponse, type media } from '$lib/anilist'
 import { client } from '$lib/pocketbase'
 import type { ListResult } from 'pocketbase'
 import type { EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
+import { searchTypes } from './data'
 
 export const data = writable<Entry[]>([])
 
@@ -27,6 +28,25 @@ const SORT_ID_MAP: { [key: string]: string } = {
 }
 
 const POCKETBASE_SORTERS_LIST: string[] = ['updated']
+const POCKETBASE_SEARCH_LIST: string[] = ['release_group', 'release_group_best', 'release_group_alt']
+
+function getPocketBaseFilter(search:string | undefined, searchType:string) {
+
+  if (search == null || search == undefined) return ''
+
+  let filter = ''
+  if (searchType.startsWith("release_group")) {
+    filter += `trs.releaseGroup?~"${search}"`
+
+    if (searchType.endsWith("best")) {
+      filter += '&&trs.isBest?=true'
+    } else if (searchType.endsWith("alt")) {
+      filter += '&&trs.isBest?=false'
+    }
+  } 
+
+  return filter
+}
 
 // these loads have race conditions, oh well
 
@@ -34,29 +54,46 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
   const sortID = sortKeys[0]?.id
   let sort = SORT_ID_MAP[sortID] || undefined
   const search = filterValues.title as string || undefined
+  const searchType = filterValues.searchType as string || 'title'
 
   const entries: Entry[] = []
 
-  const isPocketBase = POCKETBASE_SORTERS_LIST.includes(sortID)
+  const isPocketBaseSort = POCKETBASE_SORTERS_LIST.includes(sortID)
+  const isPocketBaseSearch = POCKETBASE_SEARCH_LIST.includes(searchType)
+  const isPocketBase = isPocketBaseSort || isPocketBaseSearch
 
   if (sort && sortKeys[0].order === 'desc') {
     sort += '_DESC'
   }
 
+  
   let alRes: alResponse | undefined
-  if ((isPocketBase && search != null) || !isPocketBase) alRes = await idList({ ids, pageIndex, perPage, search, sort, format: (filterValues.format as string[])?.length ? filterValues.format as string[] : undefined })
+  if ((isPocketBaseSort && (search != null && search != undefined) ) || !isPocketBase) alRes = await idList({ ids, pageIndex, perPage, search, sort, format: (filterValues.format as string[])?.length ? filterValues.format as string[] : undefined })
+  let filter = (alRes) ? alRes?.media.map(({ id }) => 'alID=' + id).join('||') : ''
+
+  const pbFilter = getPocketBaseFilter(search, searchType)
+  if (isPocketBaseSearch && pbFilter) {
+    if (filter) {
+      filter = `${filter}||${pbFilter}`
+    } else {
+      filter = pbFilter
+    }
+  }
+
+  console.log(filter)
+  console.log(pbFilter)
   progress.value?.setWidthRatio(0.7)
   progress.value?.animate()
-  const res: ListResult<EntriesResponse<Texpand>> = await client.collection('entries').getList(1, perPage, {
-    filter: (alRes) ? alRes?.media.map(({ id }) => 'alID=' + id).join('||') : '',
-    sort: isPocketBase ? `${sortKeys[0].order === 'desc' ? '-' : ''}${sortID}` : '',
-    skipTotal: true,
+  const res: ListResult<EntriesResponse<Texpand>> = await client.collection('entries').getList(isPocketBase ? pageIndex + 1 : 1, perPage, {
+    filter: filter,
+    sort: isPocketBaseSort ? `${sortKeys[0].order === 'desc' ? '-' : ''}${sortID}` : '',
+    skipTotal: !isPocketBaseSearch,
     expand: 'trs'
   })
 
   // Check needed to use sorting from pocketbase or anilist.
   if (isPocketBase) {
-    if (search == null) { alRes = await idList({ ids: res.items.map(x => x.alID), pageIndex: 0, perPage, search, sort, format: undefined }) }
+    if (!alRes) { alRes = await idList({ ids: res.items.map(x => x.alID), pageIndex: 0, perPage, search: isPocketBaseSearch ? undefined : search, sort, format: undefined }) }
     const dbmap: { [key: string]: media } = {}
     for (const media of alRes!.media) {
       dbmap[media.id] = media
@@ -87,8 +124,11 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
       entries.push(obj)
     }
   }
-
-  serverItemCount.value = Math.min(ids?.length || Infinity, alRes!.pageInfo.total)
+  if (isPocketBaseSearch) {
+    serverItemCount.value = Math.min(ids?.length || Infinity, res!.totalItems)
+  } else {
+    serverItemCount.value = Math.min(ids?.length || Infinity, alRes!.pageInfo.total)
+  }
   progress.value?.complete()
   return entries
 }
