@@ -68,7 +68,7 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
 
   
   let alRes: alResponse | undefined
-  if ((isPocketBaseSort && (search != null && search != undefined) ) || !isPocketBase) alRes = await idList({ ids, pageIndex, perPage, search, sort, format: (filterValues.format as string[])?.length ? filterValues.format as string[] : undefined })
+  if ((isPocketBaseSort && (search != null && search != undefined) && !isPocketBaseSearch) || !isPocketBase) alRes = await idList({ ids, pageIndex, perPage, search, sort, format: (filterValues.format as string[])?.length ? filterValues.format as string[] : undefined })
   let filter = (alRes) ? alRes?.media.map(({ id }) => 'alID=' + id).join('||') : ''
 
   const pbFilter = getPocketBaseFilter(search, searchType)
@@ -91,7 +91,7 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
 
   // Check needed to use sorting from pocketbase or anilist.
   if (isPocketBase) {
-    if (!alRes) { alRes = await idList({ ids: res.items.map(x => x.alID), pageIndex: 0, perPage, search: isPocketBaseSearch ? undefined : search, sort, format: undefined }) }
+    if (!alRes || isPocketBaseSearch) { alRes = await idList({ ids: res.items.map(x => x.alID), pageIndex: 0, perPage, search: isPocketBaseSearch ? undefined : search, sort, format: undefined }) }
     const dbmap: { [key: string]: media } = {}
     for (const media of alRes!.media) {
       dbmap[media.id] = media

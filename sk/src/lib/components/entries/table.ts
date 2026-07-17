@@ -49,7 +49,7 @@ const table = createTable(data, {
 
 export const columns = table.createColumns([
   table.column({
-    accessor: ({ title }) => title.english || title.userPreferred,
+    accessor: ({ title }) => title?.english || title?.userPreferred || "UNKNOWN",
     header: 'Title',
     id: 'title',
     cell: ({row}) => createRender(TitleCoverCell, {"entry": row.original}),
