@@ -52,8 +52,7 @@ export const columns = table.createColumns([
     accessor: ({ title }) => title.english || title.userPreferred,
     header: 'Title',
     id: 'title',
-    cell: ({row}) => createRender(TitleCoverCell, {"entry": row.original})
-    ,
+    cell: ({row}) => createRender(TitleCoverCell, {"entry": row.original}),
   }),
   table.column({
     accessor: 'format',
@@ -94,16 +93,16 @@ export const columns = table.createColumns([
     header: 'Updated',
     id: 'updated'
   }),
-  table.display({
-    id: 'actions',
-    header: () => '',
-    cell: ({ row }) => {
-      if (row.isData() && row.original) {
-        return createRender(RowActions, { row: row.original })
-      }
-      return ''
-    }
-  })
+  // table.display({
+  //   id: 'actions',
+  //   header: () => '',
+  //   cell: ({ row }) => {
+  //     if (row.isData() && row.original) {
+  //       return createRender(RowActions, { row: row.original })
+  //     }
+  //     return ''
+  //   }
+  // })
 ])
 
 export const tableModel = table.createViewModel(columns)

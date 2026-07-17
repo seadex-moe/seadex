@@ -9,6 +9,7 @@
   import * as Card from '$lib/components/ui/card'
   import { Separator } from '$lib/components/ui/separator'
   import type { TorrentsResponse } from '$lib/pocketbase/generated-types.js'
+  import { get } from 'svelte/store';
   export let data
 
   let { entry, media } = data
@@ -36,7 +37,10 @@
     return acc
   }, {} as Record<string, { best: TorrentsResponse[], alt:TorrentsResponse[] }>)
 
-  $metadata.title = media.title.userPreferred
+  $: metadata.set({
+    ...get(metadata),
+    title: media.title.english || media.title.userPreferred
+  });
 </script>
 
 <div class='flex h-full md:flex-row flex-col items-center md:items-start justify-center w-full'>

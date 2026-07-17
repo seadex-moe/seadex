@@ -80,8 +80,6 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
     }
   }
 
-  console.log(filter)
-  console.log(pbFilter)
   progress.value?.setWidthRatio(0.7)
   progress.value?.animate()
   const res: ListResult<EntriesResponse<Texpand>> = await client.collection('entries').getList(isPocketBase ? pageIndex + 1 : 1, perPage, {
