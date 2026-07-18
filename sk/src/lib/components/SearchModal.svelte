@@ -43,7 +43,7 @@
       <div class='font-normal pr-5 hidden sm:block'>Search anime...</div>
     </Button>
   </Dialog.Trigger>
-  <Dialog.Content class='max-w-[90%] sm:max-w-[500px] top-4 left-1/2 -translate-x-1/2 translate-y-0 flex'>
+  <Dialog.Content class='max-w-[90%] sm:max-w-[600px] top-4 left-1/2 -translate-x-1/2 translate-y-0 flex'>
     <Dialog.Header class='w-full flex'>
       <Dialog.Title>
         <div class='flex align-items-ed bg-inherit sticky top-0 z-10 py-3'>
@@ -54,10 +54,12 @@
         {#if searchResults && searchResults.media.length > 0}
           {#each searchResults.media as media}
             <a href='/{media.id}' on:click={onSelect} class='cursor-pointer text-base text-left truncate border-t first:border-none py-2 hover:bg-accent hover:text-accent-foreground px-3 transition-colors'>
-              <div class="flex items-center gap-2">
+              <div class="flex gap-2">
                 <img loading='lazy' src={media.coverImage.medium || ''} alt='cover' class='rounded h-full w-10' style:--color={media.coverImage.color || '#1890ff'} />
-                {media.title.english || media.title.userPreferred}
-                <div class="inline opacity-75">
+                <span class='min-w-0 flex-1 truncate' title={media.title.english || media.title.userPreferred}>
+                  {media.title.english || media.title.userPreferred}
+                </span>
+                <div class="inline flex-none opacity-75">
                   [{media.format}] ({media.seasonYear || media.startDate?.year})
                 </div>
               </div>
