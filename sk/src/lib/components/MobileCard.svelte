@@ -41,17 +41,11 @@
       <div class="flex items-center gap-2">
         <h3 class="font-semibold leading-tight">
           {entry.title.english || entry.title.userPreferred}
-          {#if entry.incomplete}
-            <span title="Incomplete">
-              <ExclamationTriangle class='h-4 w-4 text-red-500'/>
-            </span>
-          {/if}
         </h3>
-
-        {#if entry.title.native}
-          <p class="text-xs text-muted-foreground truncate">
-            {entry.title.native}
-          </p>
+        {#if entry.incomplete}
+          <span title="Incomplete">
+            <ExclamationTriangle class='h-4 w-4 text-red-500'/>
+          </span>
         {/if}
       </div>
 
