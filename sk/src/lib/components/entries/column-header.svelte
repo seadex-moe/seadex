@@ -55,44 +55,16 @@
 
 {#if !props.sort.disabled}
   <div class={cn('flex items-center', className)}>
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild let:builder>
-        <Button
-          variant='ghost'
-          builders={[builder]}
-          class='h-8 data-[state=open]:bg-accent'
-          size='sm'>
-          <slot />
-          {#if props.sort.order === 'desc'}
-            <ArrowDown class='ml-2 h-4 w-4' />
-          {:else if props.sort.order === 'asc'}
-            <ArrowUp class='ml-2 h-4 w-4' />
-          {:else}
-            <CaretSort class='ml-2 h-4 w-4' />
-          {/if}
-        </Button>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content align='start'>
-        <DropdownMenu.Item on:click={handleAscSort} class='cursor-pointer'>
-          <ArrowUp class='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-          Asc
-        </DropdownMenu.Item>
-        <DropdownMenu.Item on:click={handleDescSort} class='cursor-pointer'>
-          <ArrowDown class='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-          Desc
-        </DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item on:click={props.sort.clear} class='cursor-pointer'>
-          <Paintbrush class='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-          Clear
-        </DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item on:click={handleHide} class='cursor-pointer'>
-          <EyeNone class='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-          Hide
-        </DropdownMenu.Item>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+    <Button variant='ghost' class='h-8' size='sm' on:click={props.sort.toggle}>
+      <slot />
+      {#if props.sort.order === 'desc'}
+        <ArrowDown class='ml-2 h-4 w-4' />
+      {:else if props.sort.order === 'asc'}
+        <ArrowUp class='ml-2 h-4 w-4' />
+      {:else}
+        <CaretSort class='ml-2 h-4 w-4' />
+      {/if}
+    </Button>
   </div>
 {:else}
   <slot />

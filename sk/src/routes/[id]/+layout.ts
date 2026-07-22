@@ -3,6 +3,7 @@ import type { LayoutLoad } from './$types'
 import { search } from '$lib/anilist'
 import { error } from '@sveltejs/kit'
 import type { EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
+import { ClientResponseError } from 'pocketbase'
 
 type Texpand = {
   trs: TorrentsResponse[]
@@ -15,7 +16,11 @@ export const load: LayoutLoad = async function ({ url, params: { id } }) {
       .collection('entries')
       .getFirstListItem<EntriesResponse<Texpand>>(`alID="${id}"`, { expand: 'trs' })
   } catch (e) {
-    if (!url.pathname.includes('edit')) throw error(404, 'Index Entry Not Found')
+    if (e instanceof ClientResponseError && e.status == 404) {
+      entry = {}
+    } else {
+      if (!url.pathname.includes('edit')) throw error(404, 'Index Entry Not Found')
+    }
   }
 
   const res = await search('', id)

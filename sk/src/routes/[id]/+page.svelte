@@ -9,9 +9,12 @@
   import * as Card from '$lib/components/ui/card'
   import { Separator } from '$lib/components/ui/separator'
   import type { TorrentsResponse } from '$lib/pocketbase/generated-types.js'
+  import { get } from 'svelte/store';
   export let data
 
   let { entry, media } = data
+
+  const relationsForced: string[] = ["PREQUEL", "SEQUEL", "PARENT"]
 
   $: entry = data.entry
   $: media = data.media
@@ -34,7 +37,10 @@
     return acc
   }, {} as Record<string, { best: TorrentsResponse[], alt:TorrentsResponse[] }>)
 
-  $metadata.title = media.title.userPreferred
+  $: metadata.set({
+    ...get(metadata),
+    title: media.title.english || media.title.userPreferred
+  });
 </script>
 
 <div class='flex h-full md:flex-row flex-col items-center md:items-start justify-center w-full'>
@@ -64,40 +70,48 @@
   </div>
   <Separator orientation='vertical' class='mx-10 h-auto' />
   <div class='w-full'>
-    <h2 class='font-bold my-4 text-2xl'>Torrents</h2>
-    <div class='w-full flex gap-3 flex-wrap'>
-      {#if entry.theoreticalBest}
-        <Card.Root class='w-80 max-w-full flex flex-col'>
-          <Card.Header>
-            <Card.Title>{entry.theoreticalBest}</Card.Title>
-          </Card.Header>
-          <Card.Footer class='mt-auto'>
-            <span class='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300'>Unmuxed</span>
-            <span class='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>Best</span>
-          </Card.Footer>
-        </Card.Root>
-      {/if}
-      {#each Object.entries(groupped) as [releaseGroup, torrentinfo]}
-        {#if torrentinfo.best.length}
-          <ReleaseCard {releaseGroup} torrents={torrentinfo.best} />
-        {/if}
-      {/each}
-      {#each Object.entries(groupped) as [releaseGroup, torrentinfo]}
-        {#if torrentinfo.alt.length}
-          <ReleaseCard {releaseGroup} torrents={torrentinfo.alt} />
-        {/if}
-      {/each}
-    </div>
-    <Separator class='my-10' />
-    {#if entry.notes}
-      <h2 class='font-bold my-4 text-2xl'>Notes</h2>
+    {#if !entry.alID}
+      <h2 class='font-bold my-4 text-2xl'>Missing Entry</h2>
       <div class='mb-3 whitespace-pre-wrap'>
-        {entry.notes}
+        The current entry doesn't have any releases listed, this could be due to a plethora of reasons. The main culprit usually being a lack of a comparison of the video sources. If you would like to help feel free to join the discord above and check out our <a class="font-bold text-blue-500" href="https://thewiki.moe">wiki</a> to see how to make a comparison.
       </div>
       <Separator class='my-10' />
+    {:else}
+      <h2 class='font-bold my-4 text-2xl'>Torrents</h2>
+      <div class='w-full flex gap-3 flex-wrap'>
+        {#if entry.theoreticalBest}
+          <Card.Root class='w-80 max-w-full flex flex-col'>
+            <Card.Header>
+              <Card.Title>{entry.theoreticalBest}</Card.Title>
+            </Card.Header>
+            <Card.Footer class='mt-auto'>
+              <span class='bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300'>Unmuxed</span>
+              <span class='bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300'>Best</span>
+            </Card.Footer>
+          </Card.Root>
+        {/if}
+        {#each Object.entries(groupped) as [releaseGroup, torrentinfo]}
+          {#if torrentinfo.best.length}
+            <ReleaseCard {releaseGroup} torrents={torrentinfo.best} />
+          {/if}
+        {/each}
+        {#each Object.entries(groupped) as [releaseGroup, torrentinfo]}
+          {#if torrentinfo.alt.length}
+            <ReleaseCard {releaseGroup} torrents={torrentinfo.alt} />
+          {/if}
+        {/each}
+      </div>
+      <Separator class='my-10' />
+      {#if entry.notes}
+        <h2 class='font-bold my-4 text-2xl'>Notes</h2>
+        <div class='mb-3 whitespace-pre-wrap'>
+          {entry.notes}
+        </div>
+        <Separator class='my-10' />
+      {/if}
     {/if}
     {#key media}
-      <MediaRelations edges={media.relations?.edges.filter(({ node }) => data.ids.includes(node.id))} />
+      <MediaRelations edges={media.relations?.edges.filter(({ node, relationType}) => data.ids.includes(node.id) || (node.status === 'FINISHED' && relationsForced.includes(relationType)) )} />
     {/key}
   </div>
 </div>

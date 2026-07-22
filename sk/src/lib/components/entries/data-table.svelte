@@ -8,6 +8,7 @@
   import { columns, tableModel } from './table'
   import { debounce } from '$lib/util'
   import type { SortKey } from 'svelte-headless-table/plugins'
+  import AnimeCard from '$lib/components/MobileCard.svelte'
 
   const { headerRows, pageRows, tableAttrs, tableBodyAttrs, pluginStates } = tableModel
 
@@ -34,7 +35,7 @@
 
 <div class='space-y-4 w-full flex-grow flex flex-col'>
   <Toolbar {tableModel} bind:isEditing />
-  <div class='rounded-md border h-full'>
+  <div class='hidden md:block rounded-md border h-full'>
     <Table.Root {...$tableAttrs} class={$loading || !$pageRows.length ? 'h-full' : ''}>
       <Table.Header>
         {#each $headerRows as headerRow}
@@ -83,6 +84,10 @@
                         <div class='w-[32px]'>
                           <Render of={cell.render()} />
                         </div>
+                      {:else if cell.id === 'updated'}
+                        <div class='whitespace-nowrap'>
+                          <Render of={cell.render()} />
+                        </div> 
                       {:else}
                         <Render of={cell.render()} />
                       {/if}
@@ -102,5 +107,23 @@
       </Table.Body>
     </Table.Root>
   </div>
+
+    <!-- Mobile -->
+  <div class="space-y-3 md:hidden">
+    {#if $loading}
+      <div class="p-4 text-center">
+        Loading...
+      </div>
+    {:else if $pageRows.length}
+      {#each $pageRows as row (row.original.id)}
+        <AnimeCard entry={row.original} />
+      {/each}
+    {:else}
+      <div class="rounded-md border p-8 text-center">
+        No Results Found.
+      </div>
+    {/if}
+  </div>
+
   <Pagination {tableModel} />
 </div>

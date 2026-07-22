@@ -50,8 +50,8 @@
         {/each}
       </nav>
     </div>
-    <SearchModal />
-    <div class='flex items-center space-x-4 ml-auto sm:ml-0'>
+    <div class='flex items-center space-x-4 ml-auto'>
+      <SearchModal />
       {#if $authModel}
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild let:builder>
