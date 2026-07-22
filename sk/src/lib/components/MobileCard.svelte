@@ -10,18 +10,17 @@
     ...new Map(
       sortTorrents(entry.expand?.trs)
         .filter(({ isBest }) => isBest)
-        .map(trs => [trs.releaseGroup, trs])
-    ).values()
+        .map((trs) => [trs.releaseGroup, trs]),
+    ).values(),
   ];
 
   const altReleases = [
     ...new Map(
       sortTorrents(entry.expand?.trs)
         .filter(({ isBest }) => !isBest)
-        .map(trs => [trs.releaseGroup, trs])
-    ).values()
+        .map((trs) => [trs.releaseGroup, trs]),
+    ).values(),
   ];
-
 </script>
 
 <a
@@ -37,74 +36,78 @@
     />
 
     <div class="min-w-0 flex-1 space-y-3">
-
       <div class="flex items-center gap-2">
         <h3 class="font-semibold leading-tight">
           {entry.title.english || entry.title.userPreferred}
         </h3>
         {#if entry.incomplete}
           <span title="Incomplete">
-            <ExclamationTriangle class='h-4 w-4 text-red-500'/>
+            <ExclamationTriangle class="h-4 w-4 text-red-500" />
           </span>
         {/if}
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div class="min-w-0">
-            <h4 class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <h4
+            class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+          >
             Best
-            </h4>
+          </h4>
 
-            {#if bestReleases.length}
+          {#if bestReleases.length}
             <div class="space-y-1">
               {#each bestReleases as trs}
-                <div class="flex items-center gap-2">
-                  <span
-                    class="truncate text-sm"
-                  >
-                    {trs.releaseGroup}
-                  </span>
+                <div class="min-w-0 flex-1 items-center gap-2">
+                    <span class="[overflow-wrap:anywhere] text-sm">
+                      {trs.releaseGroup}
+                    </span>
 
                   {#if trs.dualAudio}
-                    <Badge class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white">
+                    <Badge
+                      class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white truncate"
+                    >
                       <span>Dual</span>
                     </Badge>
                   {/if}
                 </div>
               {/each}
             </div>
-            {:else}
+          {:else}
             <span class="text-sm text-muted-foreground">
-                {entry.theoreticalBest}
+              {entry.theoreticalBest}
             </span>
-            {/if}
+          {/if}
         </div>
 
         {#if altReleases.length}
-        <div class="min-w-0">
-            <h4 class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <div class="min-w-0">
+            <h4
+              class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+            >
               Alt
             </h4>
 
             <div class="space-y-1">
               {#each altReleases as trs}
-                <div class="flex items-center gap-2">
-                  <span class="truncate text-sm">
+                <div class="min-w-0 flex-1 items-center gap-2">
+                  <span class="[overflow-wrap:anywhere] text-sm">
                     {trs.releaseGroup}
                   </span>
 
                   {#if trs.dualAudio}
-                    <Badge class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white">
+                    <Badge
+                      class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white truncate"
+                    >
                       <span>Dual</span>
                     </Badge>
                   {/if}
-              </div>
-            {/each}
+                </div>
+              {/each}
+            </div>
           </div>
-          </div>
-          {/if}
-        </div>
-
+        {/if}
+      </div>
     </div>
   </div>
 </a>
