@@ -2,7 +2,7 @@ import PocketBase from 'pocketbase'
 import { env } from '$env/dynamic/private'
 import type { EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
 
-const client = new PocketBase(env.PROXY_TARGET || 'http://0.0.0.0:59992')
+const client = new PocketBase(env.POCKETBASE_URL || 'http://0.0.0.0:59992')
 
 function escapeHtml(unsafe) {
   return unsafe
