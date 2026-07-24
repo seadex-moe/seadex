@@ -47,7 +47,7 @@
         {/if}
       </div>
 
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid min-[480px]:grid-cols-2 gap-4">
         <div class="min-w-0">
           <h4
             class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
@@ -81,7 +81,7 @@
         </div>
 
         {#if altReleases.length}
-          <div class="min-w-0">
+          <div class="min-w-0 max-[480px]:hidden">
             <h4
               class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
             >
