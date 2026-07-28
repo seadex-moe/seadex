@@ -1,6 +1,7 @@
 import { createRender, createTable } from 'svelte-headless-table'
 import { data, serverItemCount } from './query'
 import { sortTorrents } from '$lib/util'
+import { browser } from '$app/environment';
 import {
   addColumnFilters,
   addHiddenColumns,
@@ -21,6 +22,10 @@ const dateStringOptions = {
   day: "numeric",
 };
 
+const defaultSort = [{ id: 'seasonYear', order: 'desc' }];
+
+const initialSortKeys = browser ? JSON.parse(localStorage.getItem('sortKeys') ?? 'null') ?? defaultSort : defaultSort;
+
 for (const [index, treshold] of widthTresholds.entries()) {
   if (window.outerWidth < treshold) { // this could be innerWidth, but that excludes devtools, we want capabilities, not viewport
     initialHiddenColumnIds.push(nextToHideBasedOnWidth[index])
@@ -32,7 +37,7 @@ const table = createTable(data, {
     toggleOrder: ['asc', 'desc'],
     serverSide: true,
     disableMultiSort: true,
-    initialSortKeys: [{ id: 'seasonYear', order: 'desc' }]
+    initialSortKeys
   }),
   page: addPagination({
     serverSide: true,

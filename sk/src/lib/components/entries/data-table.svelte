@@ -26,6 +26,10 @@
     query(pageIndex, pageSize, filterValues, $sortKeys, ids)
   }, 300)
 
+  pluginStates.sort.sortKeys.subscribe((keys) => {
+    localStorage.setItem('sortKeys', JSON.stringify(keys));
+  });
+
   let isEditing = false
   let firstLoad = true
 
