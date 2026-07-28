@@ -48,3 +48,11 @@ export const formats = [
     label: 'ONA'
   }
 ]
+
+
+export const searchTypes = new Map<string, string>([
+    ["title", "Title"],
+    ["release_group", "Release Group"],
+    ["release_group_best", "Release Group (Best)"],
+    ["release_group_alt", "Release Group (Alt)"],
+  ])

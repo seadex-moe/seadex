@@ -8,6 +8,7 @@ export type media = {
   },
   coverImage: {
     extraLarge: string,
+    medium: string
     color: string
   }
   season?: number,
@@ -24,7 +25,8 @@ export type media = {
   genres?: string[],
   relations?: {
     edges: {
-      node: media
+      node: media,
+      relationType: string
     }[]
   }
 }
@@ -99,7 +101,11 @@ export async function idList ({ ids, pageIndex = 0, perPage = 10, sort = 'SEARCH
             year
           },
           format,
-          episodes
+          episodes,
+          coverImage {
+            medium,
+            color
+          }
         }
       }
     }`.replace(/\s/g, ''),
@@ -165,7 +171,8 @@ export async function search (search: string, id?: string): Promise<alResponse> 
                 status,
                 type,
                 episodes
-              }
+              },
+              relationType
             }
           }
         }

@@ -56,7 +56,7 @@ export const handle = async ({ event, resolve }) => {
 
     let desc = ''
     
-    if (item.theoreticalBest) desc += `Theoretical Best: ${item.theoreticalBest}\n`
+    if (item.theoreticalBest) desc += `**Theoretical Best:** ${item.theoreticalBest}\n`
 
     const best = item.expand?.trs.filter(({ isBest }) => isBest)
     if (best?.length) {

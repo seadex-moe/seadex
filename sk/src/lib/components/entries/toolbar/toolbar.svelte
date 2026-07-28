@@ -2,9 +2,9 @@
   import type { TableViewModel } from 'svelte-headless-table'
   import Cross2 from 'svelte-radix/Cross2.svelte'
   import type { Writable } from 'svelte/store'
-  import { formats } from '../data.js' // TODO: change to format
+  import { formats, searchTypes } from '../data.js' // TODO: change to format
   import type { Entry } from '../schemas.js'
-  import { FacetedFilter, ViewOptions } from '../index.js'
+  import { FacetedFilter, FilterTypeList, ViewOptions } from '../index.js'
   import { Button } from '$lib/components/ui/button'
   import { Input } from '$lib/components/ui/input'
   import { Checkbox } from '$lib/components/ui/checkbox'
@@ -22,16 +22,17 @@
       format: string[]
       priority: string[]
       title: string
+      searchType: string
     }>
   } = pluginStates.colFilter
 
-  $: showReset = Object.values($filterValues).some((v) => v.length > 0)
+  $: showReset = Object.values($filterValues).some((v) => v.length > 0 && v !== 'title')
 </script>
 
 <div class='flex items-center justify-between'>
   <div class='flex flex-1 items-center space-x-2 md:max-w-[70%] mr-2'>
     <Input
-      placeholder='Filter titles...'
+      placeholder='Filter {searchTypes.get($filterValues.searchType || 'title')}...'
       class='h-8 w-full'
       type='search'
       autofocus={true}
@@ -43,6 +44,8 @@
       title='Format'
       options={formats}
     />
+
+    <FilterTypeList bind:value={$filterValues.searchType} {tableModel} />
     {#if $authModel?.canEdit}
       <Checkbox bind:checked={isEditing} class='border border-input' id='asEditor' />
       <Label for='asEditor'>Edit</Label>
@@ -53,6 +56,7 @@
           $filterValues.format = []
           $filterValues.priority = []
           $filterValues.title = ''
+          $filterValues.searchType = 'title'
         }}
         variant='ghost'
         class='h-8 px-2 lg:px-3'>
