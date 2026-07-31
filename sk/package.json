@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite dev",
     "dev:remote": "ssh srv.us -R 1:localhost:59991",
-    "build": "vite build",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4000 vite build",
     "typegen": "pocketbase-typegen --db ../pb/pb_data/data.db --out ./src/lib/pocketbase/generated-types.ts",
     "test": "playwright test",
     "preview": "vite preview",
