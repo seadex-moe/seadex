@@ -3,8 +3,8 @@ FROM alpine:3.20 AS pb
 
 WORKDIR /app/pb
 
-ADD --checksum=sha256:b84c17b64c8bef5632dd8348176392159592424675c2c0d863d6521f92fc0a93 \
-    https://github.com/pocketbase/pocketbase/releases/download/v0.22.12/pocketbase_0.22.12_linux_amd64.zip \
+ADD --checksum=sha256:fdc960131f9762c6aeb8740715822463ad7336a20a054b5dc31a2fb6ad8cd5a0 \
+    https://github.com/pocketbase/pocketbase/releases/download/v0.22.51/pocketbase_0.22.51_linux_amd64.zip \
     /tmp/pb.zip
 
 RUN apk add --no-cache unzip
