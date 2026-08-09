@@ -98,6 +98,7 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
     }
 
     for (const entry of res.items) {
+      if (!(entry.alID in dbmap)) continue
       const media = dbmap[entry.alID] || {}
       const obj = {
         ...entry,
