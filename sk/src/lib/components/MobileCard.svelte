@@ -21,7 +21,11 @@
         .map((trs) => [trs.releaseGroup, trs]),
     ).values(),
   ];
+
+  let width = 0;
 </script>
+
+<svelte:window bind:innerWidth={width} />
 
 <a
   href="./{entry.id}"
@@ -30,15 +34,15 @@
   <div class="flex gap-3">
     <img
       loading="lazy"
-      src={entry.coverImage.medium}
-      alt={entry.title.userPreferred}
+      src={entry.coverImage?.medium}
+      alt={entry.title?.userPreferred}
       class="h-28 w-20 rounded object-cover flex-shrink-0"
     />
 
     <div class="min-w-0 flex-1 space-y-3">
       <div class="flex items-center gap-2">
         <h3 class="font-semibold leading-tight">
-          {entry.title.english || entry.title.userPreferred}
+          {entry.title?.english || entry.title?.userPreferred}
         </h3>
         {#if entry.incomplete}
           <span title="Incomplete">
@@ -47,41 +51,40 @@
         {/if}
       </div>
 
-      <div class="grid min-[480px]:grid-cols-2 gap-4">
-        <div class="min-w-0">
-          <h4
-            class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
-          >
-            Best
-          </h4>
+      <div class="grid min-[450px]:grid-cols-2 gap-4">
+      
+        {#if bestReleases.length || entry.theoreticalBest}
+          <div class="min-w-0">
+            <h4 class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Best</h4>
 
-          {#if bestReleases.length}
-            <div class="space-y-1">
-              {#each bestReleases as trs}
-                <div class="min-w-0 flex-1 items-center gap-2">
-                    <span class="[overflow-wrap:anywhere] text-sm">
-                      {trs.releaseGroup}
-                    </span>
+            {#if bestReleases.length}
+              <div class="space-y-1">
+                {#each bestReleases as trs}
+                  <div class="min-w-0 flex-1 items-center gap-2">
+                      <span class="[overflow-wrap:anywhere] text-sm">
+                        {trs.releaseGroup}
+                      </span>
 
-                  {#if trs.dualAudio}
-                    <Badge
-                      class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white truncate"
-                    >
-                      <span>Dual</span>
-                    </Badge>
-                  {/if}
-                </div>
-              {/each}
-            </div>
-          {:else}
-            <span class="text-sm text-muted-foreground">
-              {entry.theoreticalBest}
-            </span>
-          {/if}
-        </div>
+                    {#if trs.dualAudio}
+                      <Badge
+                        class="bg-white text-zinc-800 dark:bg-zinc-800 dark:text-white truncate"
+                      >
+                        <span>Dual</span>
+                      </Badge>
+                    {/if}
+                  </div>
+                {/each}
+              </div>
+            {:else}
+              <span class="text-sm text-muted-foreground">
+                {entry.theoreticalBest}
+              </span>
+            {/if}
+          </div>
+        {/if}
 
-        {#if altReleases.length}
-          <div class="min-w-0 max-[480px]:hidden">
+        {#if altReleases.length && (!(bestReleases.length || entry.theoreticalBest) || width >= 450)}
+          <div class="min-w-0">
             <h4
               class="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
             >

@@ -12,8 +12,8 @@
   <h2 class='font-bold my-4 text-2xl'>Relations</h2>
   <div class='w-full flex flex-wrap gap-4'>
     {#each edgesFiltered as { node }}
-      <a href='/{node.id}/{edit ? 'edit' : '' }' class='min-w-[250px] max-w-xs text-decoration-none mb-3'>
-        <div class='w-full min-h-32 max-h-36 flex flex-row border rounded items-stretch'>
+      <a href='/{node.id}/{edit ? 'edit' : '' }' class='min-w-[250px] max-w-xs text-decoration-none mb-3 flex'>
+        <div class='w-full min-h-32 flex flex-row border rounded items-stretch'>
           <div class="w-32">
             <img src={node.coverImage.extraLarge} alt='cover' class='h-full' style:object-fit='cover' />
           </div>
