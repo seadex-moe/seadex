@@ -63,7 +63,7 @@ const entriesList = await entriesResponse.json()`
     </h3>
 
     <p>
-      SeaDex only lists completed shows, for airing content or shows not present on SeaDex, you can refer to <a href='https://thewiki.moe/guides/quality/#releases' target='_blank' rel='noopener noreferrer'
+      SeaDex only lists completed shows, for airing content or shows not present on SeaDex, you can refer to <a href='https://thewiki.moe/guides/quality/#airing-releases' target='_blank' rel='noopener noreferrer'
         class='text-blue-600 dark:text-blue-400 hover:underline'>
         thewiki
       </a> for a general idea of good groups to download.
