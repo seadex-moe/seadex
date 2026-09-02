@@ -7,6 +7,8 @@ module.exports = {
         method: 'POST',
         data: { query: `query{Media(id:${id}){title{english,romaji}coverImage{large}}}` },
         headers: {
+          Origin: "https://releases.moe",
+          Referer: "https://releases.moe/",
           'Content-Type': 'application/json',
           Accept: 'application/json'
         }

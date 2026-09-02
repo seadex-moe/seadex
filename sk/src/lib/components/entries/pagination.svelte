@@ -36,7 +36,6 @@
           <Select.Item value='100'>100</Select.Item>
           <Select.Item value='150'>150</Select.Item>
           <Select.Item value='200'>200</Select.Item>
-          <Select.Item value='500'>500</Select.Item>
         </Select.Content>
       </Select.Root>
     </div>

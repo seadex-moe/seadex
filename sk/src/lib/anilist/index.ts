@@ -58,6 +58,7 @@ async function alQuery (body: string, fetch = window.fetch) {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
+    referrerPolicy: "strict-origin-when-cross-origin",
     body
   }
   const res = await fetch('https://graphql.anilist.co', opts)
