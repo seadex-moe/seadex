@@ -4,6 +4,7 @@
 // @namespace   ThaUnknown
 // @match       *://animebytes.tv/*
 // @match       *://releases.moe/*
+// @match       *://anilist.co/*
 // @version     1.6.0
 // @author      ThaUnknown & Jimbo
 // @grant       GM_xmlhttpRequest
@@ -208,3 +209,5 @@ if (window.location.href.includes('animebytes.tv')) {
 } else if (window.location.href.includes('releases.moe')) {
   revealABEntries()
 }
+
+document.documentElement.setAttribute('data-seadex-ab-script', 'true');

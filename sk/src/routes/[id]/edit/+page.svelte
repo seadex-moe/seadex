@@ -1,5 +1,5 @@
 <script lang='ts' context='module'>
-  import { type EntriesRecord, type TorrentsRecord } from '$lib/pocketbase/generated-types'
+  import { type EntriesRecord, type TorrentsRecord, type AnilistRecord } from '$lib/pocketbase/generated-types'
   import TorrentModal from '$lib/components/TorrentModal.svelte'
   import MediaDetails from '$lib/components/MediaDetails.svelte'
   import { TYPE_EXCLUSIONS, VIDEO_RX, anitomyscriptarray } from '$lib/util'
@@ -104,6 +104,7 @@
       const newEntry: EntriesRecord = { ...entry, alID: media.id, trs: savedTorrents }
 
       await save('entries', newEntry)
+      await saveAnilistData()
       toast.success('Entry Created')
       await removedDeadTorrents()
       await invalidateAll()
@@ -111,6 +112,43 @@
     } catch (error) {
       toast.error('Failed To Save Entry' + error)
     }
+  }
+
+  async function saveAnilistData() {
+    const newAnilist: AnilistRecord = {
+      alID: media.id,
+      title_userPreferred: media.title.userPreferred,
+      title_english: media?.title?.english || "", 
+      coverImage_extraLarge: media.coverImage?.extraLarge,
+      coverImage_medium: media.coverImage?.medium,
+      coverImage_color:  media.coverImage?.color || "",
+      season: media.season || "",
+      seasonYear: media.seasonYear,
+      startDate_year: media.startDate?.year || 2008,
+      type: media.type,
+      format: media.format,
+      status: media.status,
+      episodes: media.episodes,
+      duration: media.duration,
+      averageScore: media.averageScore,
+      genres: media.genres?.join(",") || ""
+    }
+
+    let record
+    try {
+      record = await client.collection("anilist").getFirstListItem(
+        `alID = "${media.id}"`
+      );
+
+      record = await client.collection("anilist").update(record.id, newAnilist);
+    } catch (err) {
+      if (err.status === 404) {
+        record = await client.collection("anilist").create(newAnilist);
+      } else {
+        throw err
+      }
+    }
+
   }
 
   async function removedDeadTorrents() {

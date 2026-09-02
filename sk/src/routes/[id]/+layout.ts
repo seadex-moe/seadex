@@ -4,6 +4,7 @@ import { search } from '$lib/anilist'
 import { error } from '@sveltejs/kit'
 import type { EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
 import { ClientResponseError } from 'pocketbase'
+import { searchLocal } from '$lib/components/entries/query'
 
 type Texpand = {
   trs: TorrentsResponse[]
@@ -23,7 +24,12 @@ export const load: LayoutLoad = async function ({ url, params: { id } }) {
     }
   }
 
-  const res = await search('', id)
+  let res
+  try {
+    res = await search('', id)
+  } catch (error) {
+    res = await searchLocal('', id)
+  }
 
   const media = res.media[0]
 

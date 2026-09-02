@@ -6,6 +6,7 @@ import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
 export enum Collections {
+	Anilist = "anilist",
 	Auditlog = "auditlog",
 	DeadData = "dead_data",
 	Editors = "editors",
@@ -29,6 +30,25 @@ export type BaseSystemFields<T = never> = {
 	collectionId: string
 	collectionName: Collections
 	expand?: T
+}
+
+export type AnilistRecord = {
+	alID: number
+	title_userPreferred?: string
+	title_english?: string
+	coverImage_extraLarge?: string
+	coverImage_medium?: string
+	coverImage_color?: string
+	season?: string
+	seasonYear?: number
+	startDate_year?: number
+	type?: string
+	format?: string
+	status?: string
+	episodes?: number
+	duration?: number
+	averageScore?: number
+	genres?: string
 }
 
 export type AuthSystemFields<T = never> = {
@@ -148,6 +168,7 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type AnilistResponse<Texpand = unknown> = Required<AnilistRecord> & BaseSystemFields<Texpand>
 export type AuditlogResponse<Tdata = unknown, Toriginal = unknown, Texpand = unknown> = Required<AuditlogRecord<Tdata, Toriginal>> & BaseSystemFields<Texpand>
 export type DeadDataResponse<Texpand = unknown> = Required<DeadDataRecord> & BaseSystemFields<Texpand>
 export type EditorsResponse<Texpand = unknown> = Required<EditorsRecord> & BaseSystemFields<Texpand>
@@ -160,6 +181,7 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	anilist: AnilistRecord
 	auditlog: AuditlogRecord
 	dead_data: DeadDataRecord
 	editors: EditorsRecord
@@ -171,6 +193,7 @@ export type CollectionRecords = {
 }
 
 export type CollectionResponses = {
+	anilist: AnilistResponse
 	auditlog: AuditlogResponse
 	dead_data: DeadDataResponse
 	editors: EditorsResponse
@@ -185,6 +208,7 @@ export type CollectionResponses = {
 // https://github.com/pocketbase/js-sdk#specify-typescript-definitions
 
 export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'anilist'): RecordService<AnilistResponse>
 	collection(idOrName: 'auditlog'): RecordService<AuditlogResponse>
 	collection(idOrName: 'dead_data'): RecordService<DeadDataResponse>
 	collection(idOrName: 'editors'): RecordService<EditorsResponse>

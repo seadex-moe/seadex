@@ -39,7 +39,7 @@
 
   $: metadata.set({
     ...get(metadata),
-    title: media.title.english || media.title.userPreferred
+    title: media?.title?.english || media?.title?.userPreferred
   });
 </script>
 
@@ -48,7 +48,9 @@
     {#if entry.incomplete}
       <div class='font-medium text-red-600 text-xl mb-3'>This Entry Is Incomplete</div>
     {/if}
-    <MediaDetails {data} />
+    {#if media?.title}
+      <MediaDetails {data} />
+    {/if}
     {#if $authModel?.canEdit}
       <Button class='my-3 px-5 h-8' href='./edit'>Edit</Button>
     {/if}
@@ -111,7 +113,7 @@
       {/if}
     {/if}
     {#key media}
-      <MediaRelations edges={media.relations?.edges.filter(({ node, relationType}) => data.ids.includes(node.id) || (node.status === 'FINISHED' && relationsForced.includes(relationType)) )} />
+      <MediaRelations edges={media?.relations?.edges.filter(({ node, relationType}) => data.ids.includes(node.id) || (node.status === 'FINISHED' && relationsForced.includes(relationType)) )} />
     {/key}
   </div>
 </div>

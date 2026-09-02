@@ -30,10 +30,12 @@
         </Select.Trigger>
         <Select.Content>
           <Select.Item value='10'>10</Select.Item>
-          <Select.Item value='20'>20</Select.Item>
           <Select.Item value='30'>30</Select.Item>
-          <Select.Item value='40'>40</Select.Item>
           <Select.Item value='50'>50</Select.Item>
+          <Select.Item value='70'>70</Select.Item>
+          <Select.Item value='100'>100</Select.Item>
+          <Select.Item value='150'>150</Select.Item>
+          <Select.Item value='200'>200</Select.Item>
         </Select.Content>
       </Select.Root>
     </div>
