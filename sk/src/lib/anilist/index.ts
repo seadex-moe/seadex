@@ -138,6 +138,7 @@ export async function search (search: string, id?: string): Promise<alResponse> 
           },
           coverImage{
             extraLarge,
+            medium,
             color
           }
           season,
@@ -151,6 +152,7 @@ export async function search (search: string, id?: string): Promise<alResponse> 
           duration,
           averageScore,
           genres,
+          type,
           relations {
             edges {
               node {
