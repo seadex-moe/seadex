@@ -27,7 +27,9 @@ export const handle = async ({ event, resolve }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Origin: 'https://releases.moe',
+        Referer: 'https://releases.moe/',
       },
       body: JSON.stringify({
         query: /* js */`
