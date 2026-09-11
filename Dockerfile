@@ -10,9 +10,9 @@ FROM node:22-alpine AS frontend-builder
 WORKDIR /app/sk
 COPY ./sk .
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm@11
 RUN pnpm install
-RUN npm run build
+RUN pnpm run build
 
 FROM node:22-alpine
 
