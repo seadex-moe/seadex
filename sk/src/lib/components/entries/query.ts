@@ -64,7 +64,6 @@ async function load (pageIndex: number, perPage: number, filterValues: Record<st
   if (sort && sortKeys[0].order === 'desc') {
     sort += '_DESC'
   }
-
   
   let alRes: alResponse | undefined
   if ((isPocketBaseSort && (search != null && search != undefined) && !isPocketBaseSearch) || !isPocketBase) 
@@ -186,6 +185,7 @@ function mapToAnilistResp(resp:ListResult<AnilistResponse<Texpand>>, ): alRespon
         duration: item.duration,
         averageScore: item.averageScore,
         genres: item?.genres.split(","),
+        synonyms: item?.synonyms.split("|_|"),
       }
     })
   }
@@ -227,8 +227,14 @@ export async function idListLocal({ ids, pageIndex = 0, perPage = 10, sort = 'SE
     sort_params = SORT_ID_MAP_PB[sort] || ""
   }
 
-  if (search)
-    filter = `title_english~"${search}"||title_userPreferred~"${search}"`
+  if (search) {
+    filter = `title_english~"${search}"||title_userPreferred~"${search}"||synonyms~"${search}"`
+
+    const split = search?.trim().split(/\s+/).filter(i => i).map((value) => `(title_english~"${value}"||title_userPreferred~"${value}"||synonyms~"${value}")`).join('&&')
+
+    if (split)
+      filter = `${filter}||(${split})`
+  }
 
   if (format)
     filter = filter + (filter ? '&&' : '') + `format="${format}"`

@@ -131,7 +131,8 @@
       episodes: media.episodes,
       duration: media.duration,
       averageScore: media.averageScore,
-      genres: media.genres?.join(",") || ""
+      genres: media.genres?.join(",") || "",
+      synonyms: media.synonyms?.join("|_|") || ""
     }
 
     let record

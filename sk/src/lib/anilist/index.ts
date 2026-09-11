@@ -23,6 +23,7 @@ export type media = {
   duration?: number,
   averageScore?: number,
   genres?: string[],
+  synonyms?: string[],
   relations?: {
     edges: {
       node: media,
@@ -154,6 +155,7 @@ export async function search (search: string, id?: string): Promise<alResponse> 
           averageScore,
           genres,
           type,
+          synonyms,
           relations {
             edges {
               node {
