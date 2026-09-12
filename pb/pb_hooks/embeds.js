@@ -116,5 +116,8 @@ module.exports = {
     fields.push({ name: 'Best', value: this.wrap(record.get('isBest')), inline: true })
 
     return this.embed(user, fields, 'New Torrent')
+  },
+  anilist () {
+    
   }
 }
