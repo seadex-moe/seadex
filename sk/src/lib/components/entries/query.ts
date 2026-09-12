@@ -230,7 +230,7 @@ export async function idListLocal({ ids, pageIndex = 0, perPage = 10, sort = 'SE
   if (search) {
     filter = `title_english~"${search}"||title_userPreferred~"${search}"||synonyms~"${search}"`
 
-    const split = search?.trim().split(/\s+/).filter(i => i).map((value) => `(title_english~"${value}"||title_userPreferred~"${value}"||synonyms~"${value}")`).join('&&')
+    const split = search?.trim().split(/[\s\._]+/).filter(i => i).map((value) => `(title_english~"${value}"||title_userPreferred~"${value}"||synonyms~"${value}")`).join('&&')
 
     if (split)
       filter = `${filter}||(${split})`
