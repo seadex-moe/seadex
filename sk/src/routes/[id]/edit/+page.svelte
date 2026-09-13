@@ -103,8 +103,8 @@
       }
       const newEntry: EntriesRecord = { ...entry, alID: media.id, trs: savedTorrents }
 
-      await save('entries', newEntry)
       await saveAnilistData()
+      await save('entries', newEntry)
       toast.success('Entry Created')
       await removedDeadTorrents()
       await invalidateAll()
@@ -131,7 +131,8 @@
       episodes: media.episodes,
       duration: media.duration,
       averageScore: media.averageScore,
-      genres: media.genres?.join(",") || ""
+      genres: media.genres?.join(",") || "",
+      synonyms: media.synonyms?.join("|_|") || ""
     }
 
     let record

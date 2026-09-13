@@ -49,6 +49,7 @@ export type AnilistRecord = {
 	duration?: number
 	averageScore?: number
 	genres?: string
+	synonyms?: string
 }
 
 export type AuthSystemFields<T = never> = {

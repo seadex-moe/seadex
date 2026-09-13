@@ -2,21 +2,12 @@ module.exports = {
   copy: obj => JSON.parse(JSON.stringify(obj)),
   anilistData: id => {
     try {
-      const res = $http.send({
-        url: 'https://graphql.anilist.co',
-        method: 'POST',
-        data: { query: `query{Media(id:${id}){title{english,romaji}coverImage{large}}}` },
-        headers: {
-          Origin: "https://releases.moe",
-          Referer: "https://releases.moe/",
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
-      })
-      const title = res.json.data.Media.title
-      const poster = res.json.data.Media.coverImage.large || ''
+      const data = $app.dao()?.findFirstRecordByFilter('anilist', `alID = '${id}'`)
+
+      const title = data.get('title_english') || data.get('title_userPreferred') || ''
+      const poster = data.get('coverImage_extraLarge') || data.get('coverImage_medium') || ''
       return {
-        title: title.english || title.romaji,
+        title,
         poster
       }
     } catch (e) {

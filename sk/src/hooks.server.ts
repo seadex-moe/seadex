@@ -1,10 +1,10 @@
 import PocketBase from 'pocketbase'
 import { env } from '$env/dynamic/private'
-import type { EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
+import type { AnilistResponse, EntriesResponse, TorrentsResponse } from '$lib/pocketbase/generated-types'
 
 const client = new PocketBase(env.PROXY_TARGET || 'http://0.0.0.0:59992')
 
-function escapeHtml(unsafe) {
+function escapeHtml(unsafe: string) {
   return unsafe
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -23,38 +23,7 @@ export const handle = async ({ event, resolve }) => {
       trs: TorrentsResponse[]
     }>>(`alID="${event.params.id}"`, { expand: 'trs' })
 
-    const res = await fetch('https://graphql.anilist.co', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Origin: 'https://releases.moe',
-        Referer: 'https://releases.moe/',
-      },
-      body: JSON.stringify({
-        query: /* js */`
-          query($id: Int) {
-            Media(id: $id) {
-              title {
-                english,
-                userPreferred
-              }
-              coverImage {
-                large
-                color
-              },
-              seasonYear
-            }
-          }
-        `,
-        variables: {
-          id: Number(event.params.id)
-        }
-      })
-    })
-    if (!res.ok) throw res
-
-    const { data } = await res.json()
+    const data = await client.collection('anilist').getFirstListItem<AnilistResponse>(`alID="${event.params.id}"`)
 
     let desc = ''
     
@@ -72,8 +41,8 @@ export const handle = async ({ event, resolve }) => {
     if (item.notes) desc += `\n${item.notes}\n`
     // if (item.comparison) desc += `\n${item.comparison.replaceAll(',', ' ')}\n`
 
-    let title: string = data.Media.title.english || data.Media.title.userPreferred
-    if (!title.includes(data.Media.seasonYear)) title += ` (${data.Media.seasonYear})`
+    let title: string = data.title_english || data.title_userPreferred
+    if (!title.includes(""+data.seasonYear)) title += ` (${data.seasonYear})`
 
     desc = escapeHtml(desc)
 
@@ -81,10 +50,10 @@ export const handle = async ({ event, resolve }) => {
       transformPageChunk: ({ html }) => {
         return html.replace(
           '<meta name="twitter:image" content="/favicon.png">',
-          `<meta name="twitter:image" content="${data.Media.coverImage.large}">`
+          `<meta name="twitter:image" content="${data.coverImage_extraLarge}">`
         ).replace(
           '<meta property="og:image" content="/favicon.png">',
-          `<meta property="og:image" content="${data.Media.coverImage.large}"><meta property="og:site_name" content="SeaDex" />`
+          `<meta property="og:image" content="${data.coverImage_extraLarge}"><meta property="og:site_name" content="SeaDex" />`
         ).replace(
           '<meta property="og:title" content="SeaDex">',
           `<meta property="og:title" content="${title}">`
@@ -99,7 +68,7 @@ export const handle = async ({ event, resolve }) => {
           `<meta property="og:description" content="${desc}">`
         ).replace(
           '<meta name="theme-color" content="#ff4242">',
-          `<meta name="theme-color" content="${data.Media.coverImage.color || '#3db4f2'}">`
+          `<meta name="theme-color" content="${data.coverImage_color || '#3db4f2'}">`
         ).replace(
           '<meta property="og:type" content="object">',
           '<meta property="og:type" content="rich">'
