@@ -131,6 +131,7 @@ dist
 
 # pocketbase
 /pb/pocketbase*.zip
+/pb/pocketbase
 /pb/pocketbase.exe
 /pb/pb_data
 /pb/tmp
