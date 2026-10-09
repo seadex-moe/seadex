@@ -1,18 +1,19 @@
 // ==UserScript==
 // @name        AB - Mark SeaDex Releases
-// @description Tags the best releases on AnimeBytes according to https://releases.moe/
+// @description Tags the best releases on AnimeBytes according to https://seadex.moe/
 // @namespace   ThaUnknown
 // @match       *://animebytes.tv/*
 // @match       *://releases.moe/*
+// @match       *://seadex.moe/*
 // @match       *://anilist.co/*
-// @version     1.6.0
+// @version     1.7.0
 // @author      ThaUnknown & Jimbo
 // @grant       GM_xmlhttpRequest
 // @icon        http://animebytes.tv/favicon.ico
-// @downloadURL https://releases.moe/animebytesmark.user.js
-// @updateURL   https://releases.moe/animebytesmark.user.js
+// @downloadURL https://seadex.moe/animebytesmark.user.js
+// @updateURL   https://seadex.moe/animebytesmark.user.js
 // @require     https://cdn.jsdelivr.net/gh/CoeJoder/waitForKeyElements.js@v1.3/waitForKeyElements.js
-// @connect     releases.moe
+// @connect     seadex.moe
 // @license     MIT
 // @run-at      document-idle
 // ==/UserScript==
@@ -21,7 +22,7 @@
 
 const TORRENT_ID_REGEX = /&torrentid=(\d+)/i
 
-const seadexEndpoint = tinyRest('https://releases.moe/api/collections/entries/records')
+const seadexEndpoint = tinyRest('https://seadex.moe/api/collections/entries/records')
 
 function gmFetchJson (url, opts = {}, timeout = 10000) {
   return new Promise((resolve, reject) => {
@@ -151,13 +152,13 @@ async function doAnimeBytes () {
         img.onclick = e => {
           e.preventDefault()
           e.stopImmediatePropagation()
-          window.open(`https://releases.moe/${entry.alID}`, '_blank')?.focus()
+          window.open(`https://seadex.moe/${entry.alID}`, '_blank')?.focus()
         }
         parent.append(img)
 
         // seadex tab
         const tab = $('<div></div>')
-        tab.append(`<div style="margin-bottom: 4px;"><h2><a target="_blank" href="https://releases.moe/${entry.alID}">SeaDex Entry</a></h2></div>`)
+        tab.append(`<div style="margin-bottom: 4px;"><h2><a target="_blank" href="https://seadex.moe/${entry.alID}">SeaDex Entry</a></h2></div>`)
         tab.append(`<div style="border-top: 1px solid #bbb;"></div>`)
         if (entry.notes) {
           const span = $('<span style="white-space: pre-wrap;"></span>')
@@ -206,7 +207,7 @@ function revealABEntries () {
 
 if (window.location.href.includes('animebytes.tv')) {
   doAnimeBytes()
-} else if (window.location.href.includes('releases.moe')) {
+} else if (window.location.href.includes('releases.moe') || window.location.href.includes('seadex.moe')) {
   revealABEntries()
 }
 
