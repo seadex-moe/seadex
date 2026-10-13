@@ -188,7 +188,7 @@ const entriesList = await entriesResponse.json()`
       </li>
 
       <li>
-        <a href='https://gitea.com/Jimbo/PT-Userscripts/src/branch/main/nekobt-seadex.user.js'
+        <a href='https://gitea.com/Jimbo/PT-Userscripts/raw/branch/main/nekobt-seadex.user.js'
           class='font-medium text-blue-600 dark:text-blue-400 hover:underline'>
           NekoBT SeaDex
         </a>
