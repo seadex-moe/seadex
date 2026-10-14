@@ -61,10 +61,10 @@ export const handle = async ({ event, resolve }) => {
           '<meta name="twitter:title" content="SeaDex">',
           `<meta name="twitter:title" content="${title}">`
         ).replace(
-          '<meta name="twitter:description" content="Your portal to the ultimate enthusiast releases - anime with unparalleled video, audio, and subtitle perfection, backed by in-depth comparisons.">',
+          '<meta name="twitter:description" content="A curated index of the best anime releases, featuring the highest-quality video and subtitles, detailed comparisons, in-depth notes, and trusted release groups.">',
           `<meta name="twitter:description" content="${desc}">`
         ).replace(
-          '<meta property="og:description" content="Your portal to the ultimate enthusiast releases - anime with unparalleled video, audio, and subtitle perfection, backed by in-depth comparisons.">',
+          '<meta property="og:description" content="A curated index of the best anime releases, featuring the highest-quality video and subtitles, detailed comparisons, in-depth notes, and trusted release groups.">',
           `<meta property="og:description" content="${desc}">`
         ).replace(
           '<meta name="theme-color" content="#ff4242">',
