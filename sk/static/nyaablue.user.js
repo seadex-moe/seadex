@@ -1,20 +1,20 @@
 // ==UserScript==
 // @name        NyaaBlue
-// @description Tags the best releases on Nyaa according to https://releases.moe/
+// @description Tags the best releases on Nyaa according to https://seadex.moe/
 // @namespace   ThaUnknown
 // @match       https://nyaa.si/*
-// @version     1.2.2
+// @version     1.2.3
 // @author      ThaUnknown
 // @icon        https://nyaa.si/static/favicon.png
-// @downloadURL https://releases.moe/nyaablue.user.js
-// @connect     releases.moe
+// @downloadURL https://seadex.moe/nyaablue.user.js
+// @connect     seadex.moe
 // @license     MIT
 // ==/UserScript==
 
 /* get best from seadex api, use api/search for the nyaa search value */
 
-const seadexEndpoint = tinyRest('https://releases.moe/api/collections/torrents/records')
-const seadexEntryEndpoint = tinyRest('https://releases.moe/api/collections/entries/records')
+const seadexEndpoint = tinyRest('https://seadex.moe/api/collections/torrents/records')
+const seadexEntryEndpoint = tinyRest('https://seadex.moe/api/collections/entries/records')
 
 // import tinyRest from 'tiny-rest'
 function tinyRest (url, options = {}) {
@@ -55,7 +55,7 @@ async function setViewBlue () {
       button.onclick = (e) => {
         e.preventDefault()
         e.stopImmediatePropagation()
-        window.open(`https://releases.moe/${info.alID}`, '_blank')?.focus()
+        window.open(`https://seadex.moe/${info.alID}`, '_blank')?.focus()
       }
       report?.insertAdjacentElement('beforeend', button)
     }
