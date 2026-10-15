@@ -104,6 +104,7 @@
       const newEntry: EntriesRecord = { ...entry, alID: media.id, trs: savedTorrents }
 
       await saveAnilistData()
+      await new Promise(r => setTimeout(r, 2000));
       await save('entries', newEntry)
       toast.success('Entry Created')
       await removedDeadTorrents()
