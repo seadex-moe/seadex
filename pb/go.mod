@@ -2,7 +2,7 @@ module pocketbase
 
 go 1.21
 
-toolchain go1.21.6
+toolchain go1.26.10
 
 require github.com/pocketbase/pocketbase v0.22.12
 
