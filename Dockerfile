@@ -1,11 +1,11 @@
-FROM golang:1.21.5-alpine AS backend-builder
+FROM golang:1.26.10-alpine AS backend-builder
 
 WORKDIR /app/pb
 COPY ./pb .
 
 RUN go mod tidy && go build
 
-FROM node:22-alpine AS frontend-builder
+FROM node:22.23.4-alpine AS frontend-builder
 
 WORKDIR /app/sk
 COPY ./sk .
@@ -14,7 +14,11 @@ RUN npm install -g pnpm@11
 RUN pnpm install
 RUN pnpm run build
 
-FROM node:22-alpine
+FROM node:22.23.4-alpine
+
+# Require the CA bundle that distrusts the compromised eMudhra certificate chains.
+RUN apk add --no-cache --upgrade 'ca-certificates>=20261020-r0' \
+    && update-ca-certificates
 
 # Copy PocketBase files
 COPY --from=backend-builder /app/pb/pocketbase /app/pb/pocketbase
