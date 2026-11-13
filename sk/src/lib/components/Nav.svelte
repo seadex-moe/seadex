@@ -31,7 +31,7 @@
   const links = [
     ['/about/', 'About'],
     ['https://discord.com/invite/jPeeZewWRn', 'Discord'],
-    ['https://sheet.releases.moe', 'Sheet']
+    ['https://sheet.seadex.moe', 'Sheet']
   ]
 
 </script>

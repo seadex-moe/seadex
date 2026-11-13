@@ -1,5 +1,5 @@
 # SeaDex
-This repository holds the source code that powers [SeaDex](https://releases.moe/).
+This repository holds the source code that powers [SeaDex](https://seadex.moe/).
 
 # Deployment
 To deploy SeaDex, you need [docker](https://docs.docker.com/). SeaDex images are available on [ghcr.io](https://github.com/seadex-moe/seadex/pkgs/container/seadex).
