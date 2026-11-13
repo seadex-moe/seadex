@@ -2,7 +2,7 @@
 
 module.exports = {
   embed (user, fields, title, id, thumbnail) {
-    const DOMAIN = 'https://releases.moe'
+    const DOMAIN = 'https://seadex.moe'
 
     const obj = {
       embeds: [
