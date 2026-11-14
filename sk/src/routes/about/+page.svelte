@@ -181,7 +181,7 @@ const entriesList = await entriesResponse.json()`
 
     <ul class='space-y-3'>
       <li>
-        <a href='/nyaablue.user.js' class='font-medium text-blue-600 dark:text-blue-400 hover:underline'>
+        <a href='/nyaablue.user.js' target='_blank' class='font-medium text-blue-600 dark:text-blue-400 hover:underline'>
           NyaaBlue
         </a>
         <span class='text-gray-600 dark:text-gray-400'>— A userscript that highlights SeaDex releases on Nyaa</span>
