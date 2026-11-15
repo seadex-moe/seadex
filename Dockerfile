@@ -16,7 +16,7 @@ FROM node:22.23.4-alpine AS frontend
 WORKDIR /app/sk
 COPY ./sk .
 
-RUN npm install -g pnpm@11
+RUN npm install -g pnpm@12
 RUN pnpm install
 RUN pnpm run build
 
