@@ -162,6 +162,7 @@ function mapToAnilistResp(resp:ListResult<AnilistResponse<Texpand>>, ): alRespon
       total: resp.totalItems
     },
     media: resp.items.map((item) => {
+      let date = new Date(item.startDate)
       return {
         id: item.alID,
         title: {
@@ -176,7 +177,9 @@ function mapToAnilistResp(resp:ListResult<AnilistResponse<Texpand>>, ): alRespon
         season: item.season,
         seasonYear: item.seasonYear,
         startDate: {
-          year: item.startDate_year
+          year: date.getUTCFullYear(),
+          month: date.getUTCMonth(),
+          day: date.getUTCDay()
         },
         type: item.type,
         format: item.format,
@@ -208,8 +211,8 @@ export async function searchLocal(search:string, id?: string): Promise<alRespons
 const SORT_ID_MAP_PB: { [key: string]: string } = {
   EPISODES: 'episodes',
   EPISODES_DESC: '-episodes',
-  START_DATE: 'startDate_year',
-  START_DATE_DESC: '-startDate_year',
+  START_DATE: 'startDate',
+  START_DATE_DESC: '-startDate',
   TITLE_ROMAJI: 'title_english,title_userPreferred',
   TITLE_ROMAJI_DESC: '-title_english,-title_userPreferred',
   FORMAT: 'format',

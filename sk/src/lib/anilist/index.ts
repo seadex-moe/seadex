@@ -14,7 +14,9 @@ export type media = {
   season?: number,
   seasonYear?: number,
   startDate: {
-    year: number
+    year: number,
+    month: number,
+    day: number
   },
   type: string,
   format?: string,
@@ -100,7 +102,9 @@ export async function idList ({ ids, pageIndex = 0, perPage = 10, sort = 'SEARCH
           },
           seasonYear,
           startDate {
-            year
+            year,
+            month,
+            day
           },
           format,
           episodes,
@@ -146,7 +150,9 @@ export async function search (search: string, id?: string): Promise<alResponse> 
           season,
           seasonYear,
           startDate {
-            year
+            year,
+            month,
+            day
           },
           format,
           status,
@@ -170,7 +176,9 @@ export async function search (search: string, id?: string): Promise<alResponse> 
                 }
                 seasonYear,
                 startDate {
-                  year
+                  year,
+                  month,
+                  day
                 },
                 format,
                 status,

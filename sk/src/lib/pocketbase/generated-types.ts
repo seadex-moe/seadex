@@ -41,7 +41,7 @@ export type AnilistRecord = {
 	coverImage_color?: string
 	season?: string
 	seasonYear?: number
-	startDate_year?: number
+	startDate?: IsoDateString
 	type?: string
 	format?: string
 	status?: string

@@ -124,7 +124,7 @@
       coverImage_color:  media.coverImage?.color || "",
       season: media.season || "",
       seasonYear: media.seasonYear,
-      startDate_year: media.startDate?.year || 2008,
+      startDate: new Date(media.startDate?.year || 2008, media.startDate?.month || 1, media.startDate?.day || 1),
       type: media.type,
       format: media.format,
       status: media.status,
