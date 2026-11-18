@@ -327,10 +327,12 @@ server.server.on(
 process.on('SIGTERM', graceful_shutdown)
 process.on('SIGINT', graceful_shutdown)
 
+const pocketBaseUrl = env('POCKETBASE_URL', 'http://0.0.0.0:59992').replace(/\/+$/, '')
+
 server.use('/api', createProxyMiddleware({
   secure: false,
-  target: env('POCKETBASE_URL', 'http://0.0.0.0:59992') + '/api'
+  target: pocketBaseUrl + '/api'
 })).use('/_', createProxyMiddleware({
   secure: false,
-  target: env('POCKETBASE_URL', 'http://0.0.0.0:59992') + '/_'
+  target: pocketBaseUrl + '/_'
 })).use(handler)

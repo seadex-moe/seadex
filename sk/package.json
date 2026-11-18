@@ -35,7 +35,7 @@
     "eslint-plugin-n": "^17.9.0",
     "eslint-plugin-svelte": "^2.41.0",
     "fflate": "^0.8.2",
-    "http-proxy-middleware": "^3.0.0",
+    "http-proxy-middleware": "^4.2.1",
     "lucide-svelte": "^0.408.0",
     "pocketbase-typegen": "^1.2.1",
     "postcss": "^8.4.38",
