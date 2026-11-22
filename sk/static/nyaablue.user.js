@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        NyaaBlue
 // @description Tags the best releases on Nyaa according to https://seadex.moe/
-// @namespace   ThaUnknown
+// @namespace   ThaUnknown & Jimbo
 // @match       https://nyaa.si/*
-// @version     1.2.3
+// @version     1.3.0
 // @author      ThaUnknown
 // @icon        https://nyaa.si/static/favicon.png
 // @downloadURL https://seadex.moe/nyaablue.user.js
@@ -15,6 +15,9 @@
 
 const seadexEndpoint = tinyRest('https://seadex.moe/api/collections/torrents/records')
 const seadexEntryEndpoint = tinyRest('https://seadex.moe/api/collections/entries/records')
+
+// Number of torrents in a request at once
+const REQUEST_AMOUNT = 25
 
 // import tinyRest from 'tiny-rest'
 function tinyRest (url, options = {}) {
@@ -65,17 +68,22 @@ async function setViewBlue () {
 async function setSearchBlue () {
   const infoHashList = getInfoHashItemList()
 
-  const torrentsResponse = await seadexEndpoint('', { filter: infoHashList.map(({ infoHash }) => 'infoHash="' + infoHash + '"').join('||'), skipTotal: true, perPage: 75 })
+  for (let i = 0; i < infoHashList.length; i += REQUEST_AMOUNT) {
+    const sliced = infoHashList.slice(i, i + REQUEST_AMOUNT)
 
-  const { items } = await torrentsResponse.json()
+    const torrentsResponse = await seadexEndpoint('', { filter: sliced.map(({ infoHash }) => 'infoHash="' + infoHash + '"').join('||'), skipTotal: true, perPage: REQUEST_AMOUNT })
 
-  /** @type {any[]} */
-  const bestReleases = items.filter(({ isBest }) => isBest).map(({ infoHash }) => infoHash)
-  const altReleases = items.filter(({ isBest }) => !isBest).map(({ infoHash }) => infoHash)
+    const { items } = await torrentsResponse.json()
 
-  for (const { element, infoHash } of infoHashList) {
-    if (bestReleases.includes(infoHash)) element.classList.add('best')
-    if (altReleases.includes(infoHash)) element.classList.add('best-alt')
+    /** @type {any[]} */
+    const bestReleases = items.filter(({ isBest }) => isBest).map(({ infoHash }) => infoHash)
+    /** @type {any[]} */
+    const altReleases = items.filter(({ isBest }) => !isBest).map(({ infoHash }) => infoHash)
+
+    for (const { element, infoHash } of sliced) {
+      if (bestReleases.includes(infoHash)) element.classList.add('best')
+      if (altReleases.includes(infoHash)) element.classList.add('best-alt')
+    }
   }
 }
 
