@@ -60,7 +60,7 @@
                   {media.title.english || media.title.userPreferred}
                 </span>
                 <div class="inline flex-none opacity-75">
-                  [{media.format}] ({media.seasonYear || media.startDate?.year})
+                  [{media.format}] ({media.seasonYear || media.startDate?.year || 'N/A'})
                 </div>
               </div>
             </a>

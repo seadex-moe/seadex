@@ -24,7 +24,7 @@
                 <span class='bg-green-100 text-green-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300'>{formatMap[node.format]}</span>
               {/if}
               {#if node.seasonYear || node.startDate?.year}
-                <span class='bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300'>{node.seasonYear || node.startDate?.year}</span>
+                <span class='bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300'>{node.seasonYear || node.startDate?.year || 'N/A'}</span>
               {/if}
               {#if node.episodes && !(node.episodes === 1 && node.format === 'MOVIE')}
                 <span class='bg-gray-100 text-gray-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300'>{node.episodes} Episode{node.episodes > 1 ? 's' : ''}</span>
