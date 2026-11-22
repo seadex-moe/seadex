@@ -54,10 +54,10 @@ const table = createTable(data, {
 
 export const columns = table.createColumns([
   table.column({
-    accessor: ({ title }) => title?.english || title?.userPreferred || "UNKNOWN",
+    accessor: ({ title }) => title?.english || title?.userPreferred || 'UNKNOWN',
     header: 'Title',
     id: 'title',
-    cell: ({row}) => createRender(TitleCoverCell, {"entry": row.original}),
+    cell: ({row}) => createRender(TitleCoverCell, {'entry': row.original}),
   }),
   table.column({
     accessor: 'format',
@@ -66,7 +66,7 @@ export const columns = table.createColumns([
     cell: ({ value }) => createRender(FormatCell, { value })
   }),
   table.column({
-    accessor: ({seasonYear, startDate}) => seasonYear || startDate?.year,
+    accessor: ({seasonYear, startDate}) => seasonYear || startDate?.year || 'N/A',
     header: 'Year',
     id: 'seasonYear'
   }),
@@ -77,12 +77,12 @@ export const columns = table.createColumns([
   table.column({
     accessor: entry => sortTorrents(entry.expand?.trs).find(({ isBest }) => isBest)?.releaseGroup ?? entry.theoreticalBest,
     header: 'Best',
-    cell: ({row, value}) => createRender(BestCell, {"entry": row.original, value, best: true})
+    cell: ({row, value}) => createRender(BestCell, {'entry': row.original, value, best: true})
   }),
   table.column({
     accessor: entry => sortTorrents(entry.expand?.trs).find(({ isBest }) => !isBest)?.releaseGroup ?? '',
     header: 'Alt',
-    cell: ({row, value}) => createRender(BestCell, {"entry": row.original, value, best: false})
+    cell: ({row, value}) => createRender(BestCell, {'entry': row.original, value, best: false})
   }),
   // table.column({
   //   accessor: 'theoreticalBest',
