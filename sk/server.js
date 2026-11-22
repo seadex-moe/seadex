@@ -334,5 +334,8 @@ server.use('/api', createProxyMiddleware({
   target: pocketBaseUrl + '/api'
 })).use('/_', createProxyMiddleware({
   secure: false,
-  target: pocketBaseUrl + '/_'
+  target: pocketBaseUrl,
+  pathRewrite: {
+    '^/': '/_/',
+  },
 })).use(handler)
