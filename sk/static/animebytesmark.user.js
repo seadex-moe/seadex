@@ -6,7 +6,7 @@
 // @match       *://releases.moe/*
 // @match       *://seadex.moe/*
 // @match       *://anilist.co/*
-// @version     1.8.0
+// @version     1.8.1
 // @author      ThaUnknown & Jimbo
 // @grant       GM_xmlhttpRequest
 // @icon        http://animebytes.tv/favicon.ico
@@ -149,7 +149,6 @@ async function doAnimeBytes () {
       slices.push(sliced)
     }
     await workerPool(slices, 5, async (sliced) => {
-      console.log(sliced)
       const linkMap = await fetchSeadex(sliced)
       for (const torrentLink of sliced) {
         const entry = linkMap[torrentLink.torrentId]
