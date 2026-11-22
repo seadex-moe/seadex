@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        NyaaBlue
 // @description Tags the best releases on Nyaa according to https://seadex.moe/
-// @namespace   ThaUnknown & Jimbos
+// @namespace   ThaUnknown & Jimbo
 // @match       https://nyaa.si/*
 // @version     1.3.0
 // @author      ThaUnknown
