@@ -6,7 +6,7 @@
 // @match       *://releases.moe/*
 // @match       *://seadex.moe/*
 // @match       *://anilist.co/*
-// @version     1.7.0
+// @version     1.8.0
 // @author      ThaUnknown & Jimbo
 // @grant       GM_xmlhttpRequest
 // @icon        http://animebytes.tv/favicon.ico
@@ -21,6 +21,9 @@
 /* global $, switchTabs, GM_xmlhttpRequest */
 
 const TORRENT_ID_REGEX = /&torrentid=(\d+)/i
+
+// Number of torrents in a request at once
+const REQUEST_AMOUNT = 25
 
 const seadexEndpoint = tinyRest('https://seadex.moe/api/collections/entries/records')
 
@@ -63,7 +66,7 @@ async function fetchSeadex (ids) {
   const query = ids.map(({ torrentId }) => {
     return 'trs.url?~\'%torrentid=' + torrentId + '%\''
   }).join('||')
-  const { items } = await seadexEndpoint('', { filter: `(trs.tracker?='AB' && (${query}))`, expand: 'trs', fields: '*,expand.trs.url,expand.trs.isBest', skipTotal: true })
+  const { items } = await seadexEndpoint('', { filter: `(trs.tracker?='AB' && (${query}))`, expand: 'trs', fields: '*,expand.trs.url,expand.trs.isBest', skipTotal: true, perPage: REQUEST_AMOUNT })
   const linkMap = {}
   for (const { alID, notes, comparison, expand } of items) {
     for (const { url, isBest } of expand.trs) {
@@ -118,14 +121,36 @@ function insertTorrentTab (torrentId, tabName, tabId, content) {
   if (e[1] === tabId) switchTabs(a)
 }
 
+
+async function workerPool(items, concurrency, callback) {
+  let index = 0;
+
+  async function worker() {
+    while (index < items.length) {
+      const i = index++;
+      await callback(items[i], i);
+    }
+  }
+
+  await Promise.all(
+    Array.from(
+      { length: Math.min(concurrency, items.length) },
+      () => worker()
+    )
+  );
+}
+
 async function doAnimeBytes () {
   try {
     const torrents = torrentsOnPage()
-    // Do a 100 torrents at a time to make url length manageable
-    for (let i = 0; i < torrents.length; i += 100) {
-      const sliced = torrents.slice(i, i + 100)
+    const slices = []
+    for (let i = 0; i < torrents.length; i += REQUEST_AMOUNT) {
+      const sliced = torrents.slice(i, i + REQUEST_AMOUNT)
+      slices.push(sliced)
+    }
+    await workerPool(slices, 5, async (sliced) => {
+      console.log(sliced)
       const linkMap = await fetchSeadex(sliced)
-
       for (const torrentLink of sliced) {
         const entry = linkMap[torrentLink.torrentId]
         if (!entry) continue
@@ -179,7 +204,7 @@ async function doAnimeBytes () {
 
         insertTorrentTab(torrentLink.torrentId, 'SeaDex', 'seadex', tab)
       }
-    }
+    })
   } catch (err) {
     console.error(`Failed to fetch seadex for best releases - ${err?.message || err}`)
   }
